@@ -1,31 +1,26 @@
-import { User } from "../types/index";
+import type { Book, User } from './types'
 
-type UserWithScore = User & { score: number };
+type UserWithScore = User & { score: number }
 
-function getUser(id: number): UserWithScore {
-  return {
-    id: id,
-    name: "Juan dela Cruz",
-    email: "juan@example.com",
-    role: "student",
-    isActive: true,
-    score: 95.5,
-  };
+const user: UserWithScore = {
+  id: 1,
+  name: 'Juan dela Cruz',
+  email: 'juan@example.com',
+  role: 'student',
+  isActive: true,
+  score: 95.5,
 }
 
-function calculateGrade(score: number, maxScore: number): string {
-  const percentage: number = (score / maxScore) * 100;
-  if (percentage >= 90) return "Letter grade is: A";
-  if (percentage >= 80) return "Letter grade is: B";
-  if (percentage >= 70) return "Letter grade is: C";
-  return "Letter grade is: F";
+const book: Book = {
+  id: 1,
+  title: 'Clean Code',
+  author: 'Robert C. Martin',
+  genre: 'Programming',
+  availableCopies: 2,
+  reservedCount: 1,
+  summary: 'A practical guide to writing readable software.',
+  tags: ['programming', 'best-practices'],
 }
 
-function formatCourse(name: string, units: number, semester: string): string {
-  return `${name} (${units} units) - ${semester}`;
-}
-
-const user: UserWithScore = getUser(1);
-console.log(user);
-console.log(calculateGrade(85, 100));
-console.log(formatCourse("IT Elective 4", 3, "1st Semester"));
+console.log(user.name, book.title)
+export {}
