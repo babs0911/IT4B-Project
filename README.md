@@ -1,141 +1,89 @@
 # Library Book Reservation System
 
-A simple TypeScript project that demonstrates a library book reservation workflow. It manages users, books, reservations, book availability, and reservation status updates while applying important TypeScript concepts.
+A Vite + React + TypeScript app for a simple library-book reservation demo. The project uses typed interfaces and reusable components to display mock users, books, and reservations.
+
+## Overview
+
+This project was built as a React + TypeScript assignment to demonstrate:
+
+- A Vite React TypeScript setup
+- Shared TypeScript interfaces in the src/types folder
+- Reusable components in the src/components folder
+- Typed props and event handlers
+- Mock data rendered inside App.tsx
 
 ## Features
 
-* Displays registered library users
-* Displays available books and book information
-* Tracks book reservations
-* Shows the live number of available book copies
-* Demonstrates the reservation status lifecycle
-* Uses reusable generic functions for retrieving data
-* Uses type-safe interfaces, aliases, enums, and utility types
-
-## Reservation Status Flow
-
-Each reservation follows this status progression:
-
-Pending → Reserved → Borrowed → Returned  
-
-The `ReservationStatus` enum is used to ensure that only valid reservation statuses are assigned.
-
-## TypeScript Concepts Demonstrated
-
-### Interfaces
-
-The project uses interfaces to define the structure of:
-
-* `User`
-* `Book`
-* `Reservation`
-* `ApiResponse<T>`
-
-### Type Aliases
-
-The shared types file includes aliases such as:
-
-* `ID`
-* `Coordinate`
-* `Formatter`
-* `StringOrNumber`
-* `Status`
-
-### Enums
-
-The project includes the following enums:
-
-* `ReservationStatus`
-* `UserRole`
-
-### Generics
-
-The reusable `ApiResponse<T>` interface allows different data types to be returned in a consistent response structure:
-
-```typescript
-export interface ApiResponse<T> {
-  success: boolean;
-  data: T;
-  message?: string;
-}
-```
-
-The project also includes generic helper functions:
-
-```typescript
-getFirst<T>()
-getById<T>()
-```
-
-These functions can retrieve typed items from arrays without repeating the same lookup logic.
-
-### Utility Types
-
-The following TypeScript utility types are demonstrated:
-
-* `Partial<User>` through `UserUpdate`
-* `Pick<Book>` through `BookPreview`
-* `Omit<Book>` through `PublicBook`
-* `Record` through `AvailabilityMap` and `RoleCount`
-* `ReturnType` through `NewReservation`
-
-### Special Types
-
-The project demonstrates the use of:
-
-* `unknown` with type narrowing
-* `never` for functions that always throw an error
+- Displays mock library users
+- Displays mock books with availability details
+- Displays mock reservations with status information
+- Includes three reusable components:
+  - UserCard
+  - BookCard
+  - ReservationCard
+- Uses explicit props interfaces for each component
+- Includes typed event handlers such as onClick and onSelect
 
 ## Project Structure
 
-
-project-folder/
+```text
+IT4B-Project/
 ├── src/
-│   └── index.ts
-├── types/
-│   └── index.ts
-├── README.md
+│   ├── App.tsx
+│   ├── App.css
+│   ├── main.tsx
+│   ├── types/
+│   │   └── index.ts
+│   └── components/
+│       ├── UserCard.tsx
+│       ├── BookCard.tsx
+│       └── ReservationCard.tsx
 ├── package.json
-└── tsconfig.json
+├── tsconfig.json
+└── README.md
+```
 
+## TypeScript Highlights
+
+- Interfaces for User, Book, Reservation, and ApiResponse
+- Enum for reservation status values
+- Type aliases such as ID, StringOrNumber, and Formatter
+- Utility types such as Partial, Pick, Omit, and ReturnType
+- Generic functions for reusable lookups
+- Union types and null-safe state handling in React
 
 ## Run Locally
 
 ### 1. Install dependencies
 
+```bash
 npm install
+```
 
-### 2. Run the sample application
+### 2. Start the development server
 
-npx ts-node src/index.ts
+```bash
+npm run dev
+```
 
-### 3. Verify the TypeScript build
+### 3. Verify the build
 
-npx tsc --noEmit
+```bash
+npm run build
+```
 
-The command should complete without TypeScript errors.
+The project should build successfully with no TypeScript errors.
 
 ## Main Files
 
-### `src/index.ts`
+### src/App.tsx
 
-Contains the sample application data and demonstrates:
+Renders the mock data and displays all three components.
 
-* Users, books, and reservations
-* Live book availability
-* Reservation status progression
-* Generic helper functions
-* Utility type usage
-* Union and intersection types
-* `unknown` and `never` types
+### src/components/
 
-### `types/index.ts`
+Contains the reusable React components for the app.
 
-Contains the shared TypeScript definitions, including:
+### src/types/index.ts
 
-* Interfaces
-* Type aliases
-* Enums
-* Generic functions
-* Utility types
-* Generic API response structure
+Contains the shared TypeScript type definitions and enums used throughout the app.
