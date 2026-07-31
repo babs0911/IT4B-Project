@@ -1,19 +1,20 @@
-import { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import './App.css'
 import BookCard from './components/BookCard'
 import ReservationCard from './components/ReservationCard'
 import UserCard from './components/UserCard'
+import usePrevious from './Hooks/UsePrevious.ts'
+import useToggle from './Hooks/UseToggle.ts'
 import type { Book, Reservation, User } from './types'
 import { ReservationStatus } from './types'
 
-// Primitive types and interfaces: arrays of User objects are typed with the User interface.
-const users: User[] = [
+const mockUsers: User[] = [
   { id: 1, name: 'Ana Santos', email: 'ana@example.com', role: 'student', isActive: true },
   { id: 2, name: 'Ben Cruz', email: 'ben@example.com', role: 'librarian', isActive: true },
+  { id: 3, name: 'Cleo Rivera', email: 'cleo@example.com', role: 'admin', isActive: true },
 ]
 
-// Primitive types and interfaces: books are typed using the Book interface.
-const books: Book[] = [
+const mockBooks: Book[] = [
   {
     id: 1,
     title: 'Clean Code',
@@ -34,10 +35,19 @@ const books: Book[] = [
     summary: 'A deep dive into JavaScript fundamentals.',
     tags: ['javascript', 'advanced'],
   },
+  {
+    id: 3,
+    title: 'The Pragmatic Programmer',
+    author: 'Andrew Hunt',
+    genre: 'Software Engineering',
+    availableCopies: 3,
+    reservedCount: 2,
+    summary: 'Practical advice for modern software development teams.',
+    tags: ['software', 'career'],
+  },
 ]
 
-// Enum usage: the reservation status is assigned from ReservationStatus.
-const reservations: Reservation[] = [
+const mockReservations: Reservation[] = [
   {
     id: 101,
     bookId: 1,
@@ -52,22 +62,71 @@ const reservations: Reservation[] = [
     status: ReservationStatus.Reserved,
     requestedAt: new Date('2026-07-18T09:15:00'),
   },
+  {
+    id: 103,
+    bookId: 3,
+    userId: 3,
+    status: ReservationStatus.Borrowed,
+    requestedAt: new Date('2026-07-19T10:00:00'),
+  },
 ]
 
-// Type narrowing example: selectedBook is checked before accessing its properties.
 function App() {
-  // Union type with null: state can hold either a User or null.
-  const [selectedUser, setSelectedUser] = useState<User | null>(users[0])
-  // Union type with null: state can hold either a Book or null.
-  const [selectedBook, setSelectedBook] = useState<Book | null>(books[0])
-  // Union type with null: state can hold either a Reservation or null.
-  const [selectedReservation, setSelectedReservation] = useState<Reservation | null>(reservations[0])
+  const [users, setUsers] = useState<User[]>([])
+  const [books, setBooks] = useState<Book[]>([])
+  const [reservations, setReservations] = useState<Reservation[]>([])
+  const [selectedUser, setSelectedUser] = useState<User | null>(null)
+  const [selectedBook, setSelectedBook] = useState<Book | null>(null)
+  const [selectedReservation, setSelectedReservation] = useState<Reservation | null>(null)
+  const [searchTerm, setSearchTerm] = useState<string>('')
+  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const searchInputRef = useRef<HTMLInputElement>(null)
+  const [showDetails, toggleDetails] = useToggle(false)
+  const previousSearch = usePrevious(searchTerm)
 
-  // Generic hook usage with useMemo: the returned value is inferred as a string.
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setUsers(mockUsers)
+      setBooks(mockBooks)
+      setReservations(mockReservations)
+      setSelectedUser(mockUsers[0])
+      setSelectedBook(mockBooks[0])
+      setSelectedReservation(mockReservations[0])
+      setIsLoading(false)
+    }, 500)
+
+    return () => window.clearTimeout(timer)
+  }, [])
+
+  useEffect(() => {
+    if (!isLoading) {
+      searchInputRef.current?.focus()
+    }
+  }, [isLoading])
+
   const availabilityMessage = useMemo(() => {
     if (!selectedBook) return 'No book selected.'
     return `${selectedBook.title} has ${selectedBook.availableCopies} available copy/copies.`
   }, [selectedBook])
+
+  const filteredBooks = useMemo(() => {
+    const normalizedSearch = searchTerm.trim().toLowerCase()
+
+    if (!normalizedSearch) return books
+
+    return books.filter((book) => {
+      const haystack = `${book.title} ${book.author} ${book.genre}`.toLowerCase()
+      return haystack.includes(normalizedSearch)
+    })
+  }, [books, searchTerm])
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    setSearchTerm(event.target.value)
+  }
+
+  if (isLoading) {
+    return <p className="selection">Loading library data...</p>
+  }
 
   return (
     <main className="app-shell">
@@ -77,7 +136,29 @@ function App() {
       </header>
 
       <section className="section">
-        <h2>Users</h2>
+        <label htmlFor="book-search" className="selection">
+          Search books
+        </label>
+        <input
+          id="book-search"
+          ref={searchInputRef}
+          type="text"
+          value={searchTerm}
+          onChange={handleSearchChange}
+          placeholder="Search by title, author, or genre"
+        />
+        {previousSearch !== undefined && previousSearch !== searchTerm && (
+          <p className="selection">Previous search: {previousSearch}</p>
+        )}
+      </section>
+
+      <section className="section">
+        <div className="section-header">
+          <h2>Users</h2>
+          <button type="button" onClick={toggleDetails}>
+            {showDetails ? 'Hide' : 'Show'} details
+          </button>
+        </div>
         <div className="card-grid">
           {users.map((user) => (
             <UserCard key={user.id} user={user} onClick={() => setSelectedUser(user)} />
@@ -89,7 +170,7 @@ function App() {
       <section className="section">
         <h2>Books</h2>
         <div className="card-grid">
-          {books.map((book) => (
+          {filteredBooks.map((book) => (
             <BookCard key={book.id} book={book} onSelect={() => setSelectedBook(book)} />
           ))}
         </div>
@@ -100,13 +181,23 @@ function App() {
         <h2>Reservations</h2>
         <div className="card-grid">
           {reservations.map((reservation) => (
-            <ReservationCard key={reservation.id} reservation={reservation} onSelect={() => setSelectedReservation(reservation)} />
+            <ReservationCard
+              key={reservation.id}
+              reservation={reservation}
+              onSelect={() => setSelectedReservation(reservation)}
+            />
           ))}
         </div>
         <p className="selection">Selected reservation: #{selectedReservation?.id ?? 'None'}</p>
+        {showDetails && selectedBook && (
+          <p className="selection">
+            Selected book details: {selectedBook.title} — {selectedBook.availableCopies} available
+          </p>
+        )}
       </section>
     </main>
   )
 }
 
 export default App
+
