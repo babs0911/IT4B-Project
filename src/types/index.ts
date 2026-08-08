@@ -21,6 +21,8 @@ export interface Book {
   tags: string[];
 }
 
+export type Course = Book
+
 // Interface: defines the shape of a Reservation entity.
 export interface Reservation {
   id: number;
