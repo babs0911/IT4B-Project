@@ -1,2 +1,10 @@
 @import "tailwindcss";
-@custom-variant dark (&:where(.dark, .dark *)); // <-- NEW
+@custom-variant dark (&:where(.dark, .dark *));
+
+.dark {
+	color: white;
+}
+
+.dark input {
+	color: white;
+}

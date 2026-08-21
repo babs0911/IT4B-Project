@@ -2,7 +2,8 @@ import { useState } from "react";
 import type { User } from "../types/index";
 import UserCard from "../components/UserCard";
 import useToggle from "../Hooks/UseToggle";
-import { student } from "../Data/mockData";
+
+const student: User = { id: 1, name: "Juan dela Cruz", email: "juan@example.com", role: "student", isActive: true };
 function DashboardPage() {
 // These two came straight from Session 5's App.tsx, unchanged
 const [selectedUser, setSelectedUser] = useState<User | null>(null);
