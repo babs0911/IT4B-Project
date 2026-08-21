@@ -35,7 +35,7 @@ function BookCard({ book, onSelect, variant = 'default' }: BookCardProps) {
       <button
         type="button"
         onClick={onSelect}
-        className="w-full rounded-full bg-slate-950 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-800 dark:bg-sky-500 dark:text-slate-950 dark:hover:bg-sky-400"
+        className="w-full rounded-full bg-slate-950 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-800 dark:bg-sky-500 dark:text-white dark:hover:bg-sky-400"
       >
         {isCompact ? 'View book' : 'Select this book'}
       </button>

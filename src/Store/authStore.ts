@@ -1,18 +1,25 @@
-// src/store/authStore.ts -- NEW FILE
-// The nav bar we build next has to know whether anyone is logged in. A
-// store is a box any component can read from, without passing props.
 import { create } from "zustand";
-// The shape of the store: its data AND the functions that change it
+import { persist } from "zustand/middleware";
+
 interface AuthState {
-token: string | null;
-userName: string | null;
-login: (name: string) => void;
-logout: () => void;
+	token: string | null;
+	userName: string | null;
+	login: (name: string) => void;
+	logout: () => void;
 }
-const useAuthStore = create<AuthState>((set) => ({
-token: null,
-userName: null,
-login: (name) => set({ token: `demo-token-${name}`, userName: name }),
-logout: () => set({ token: null, userName: null }),
-}));
+
+const useAuthStore = create<AuthState>()(
+	persist(
+		(set) => ({
+			token: null,
+			userName: null,
+			login: (name) => set({ token: `demo-token-${name}`, userName: name }),
+			logout: () => set({ token: null, userName: null }),
+		}),
+		{
+			name: "itelect4-auth",
+			partialize: (state) => ({ token: state.token, userName: state.userName }),
+		},
+	),
+);
 export default useAuthStore;

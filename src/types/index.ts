@@ -21,8 +21,6 @@ export interface Book {
   tags: string[];
 }
 
-export type Course = Book
-
 // Interface: defines the shape of a Reservation entity.
 export interface Reservation {
   id: number;
@@ -109,3 +107,14 @@ export function createDemoReservation(bookId: number, userId: number) {
 
 // Utility type: ReturnType captures the return type of createDemoReservation.
 export type NewReservation = ReturnType<typeof createDemoReservation>;
+
+export type ApiBook = Omit<Book, "id"> & { id: string };
+export type ApiReservation = Omit<Reservation, "id" | "bookId" | "requestedAt" | "reservedUntil" | "borrowedAt" | "returnedAt"> & {
+  id: string;
+  bookId: string;
+  requestedAt: string;
+  reservedUntil?: string;
+  borrowedAt?: string;
+  returnedAt?: string;
+};
+export type NewReservationRequest = Omit<ApiReservation, "id">;

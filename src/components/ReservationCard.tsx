@@ -1,8 +1,8 @@
-import type { Reservation } from '../types'
+import type { ID, Reservation } from '../types'
 import { ReservationStatus } from '../types'
 
 interface ReservationCardProps {
-  reservation: Reservation
+  reservation: Omit<Reservation, 'id'> & { id: ID }
   onSelect: () => void
   variant?: 'default' | 'compact'
 }
@@ -45,7 +45,7 @@ function ReservationCard({ reservation, onSelect, variant = 'default' }: Reserva
       <button
         type="button"
         onClick={onSelect}
-        className="w-full rounded-full bg-slate-950 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-800 dark:bg-emerald-500 dark:text-slate-950 dark:hover:bg-emerald-400"
+        className="w-full rounded-full bg-slate-950 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-800 dark:bg-emerald-500 dark:text-white dark:hover:bg-emerald-400"
       >
         {isCompact ? 'View' : 'Select reservation'}
       </button>

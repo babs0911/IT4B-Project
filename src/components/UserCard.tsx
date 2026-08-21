@@ -29,7 +29,7 @@ function UserCard({ user, onSelect }: UserCardProps) {
         <button
           type="button"
           onClick={() => onSelect(user)}
-          className="rounded-full bg-slate-950 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-800 dark:bg-sky-500 dark:text-slate-950 dark:hover:bg-sky-400"
+          className="rounded-full bg-slate-950 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-800 dark:bg-sky-500 dark:text-white dark:hover:bg-sky-400"
         >
           Select
         </button>

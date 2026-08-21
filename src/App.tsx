@@ -17,7 +17,7 @@ return (
 				<Route path="login" element={<LoginPage />} />
 
 				<Route element={<ProtectedRoute />}> {/* <-- the guard */}
-					  <Route path="reservations" element={<ReservationsPage />} />
+					<Route path="reservations" element={<ReservationsPage />} />
 				</Route>
 
 				<Route path="*" element={<NotFoundPage />} />
