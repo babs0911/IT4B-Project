@@ -1,16 +1,20 @@
 import { z } from "zod";
 
+const nameRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ'\-\s]+$/;
+
 export const reservationSchema = z
   .object({
     bookId: z
       .string()
       .trim()
-      .min(1, "Book ID is required."),
+      .min(1, "Book ID is required.")
+      .regex(/^\d+$/, "Book ID must contain only numbers."),
     borrowerName: z
       .string()
       .trim()
       .min(2, "Borrower name must be at least 2 characters.")
-      .max(60, "Borrower name cannot exceed 60 characters."),
+      .max(60, "Borrower name cannot exceed 60 characters.")
+      .regex(nameRegex, "Borrower name must contain only letters and spaces."),
     pickupDate: z
       .string()
       .min(1, "Pickup date is required."),
@@ -29,10 +33,6 @@ export const reservationSchema = z
   }, {
     message: "Pickup date must be at least one day in the future.",
     path: ["pickupDate"],
-  })
-  .refine((data) => data.borrowerName.trim().toLowerCase() !== data.bookId.trim().toLowerCase(), {
-    message: "Borrower name and book ID must be different.",
-    path: ["borrowerName"],
   });
 
 export type ReservationFormValues = z.infer<typeof reservationSchema>;

@@ -54,6 +54,35 @@
       "userId": 1,
       "status": 1,
       "requestedAt": "2026-07-18T09:15:00.000Z"
+    },
+    {
+      "id": "103",
+      "bookId": "1",
+      "userId": 1,
+      "status": 0,
+      "requestedAt": "2026-08-30T00:54:40.364Z"
+    },
+    {
+      "id": "104",
+      "bookId": "2",
+      "userId": 1,
+      "status": 0,
+      "requestedAt": "2026-08-30T00:55:18.760Z"
+    },
+    {
+      "bookId": "21",
+      "userId": 1,
+      "status": 0,
+      "requestedAt": "2026-08-30T01:05:26.703Z",
+      "id": "dM5vCGfv0b8"
+    },
+    {
+      "bookId": "3",
+      "userId": 1,
+      "status": 0,
+      "requestedAt": "2026-08-30T01:23:13.051Z",
+      "id": "y24u6AL8J8M"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

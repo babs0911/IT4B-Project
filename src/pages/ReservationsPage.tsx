@@ -27,6 +27,16 @@ function ReservationsPage() {
     mode: "onSubmit",
   });
 
+  const handleBookIdChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const nextValue = event.target.value.replace(/\D/g, "");
+    form.setValue("bookId", nextValue, { shouldValidate: true, shouldDirty: true });
+  };
+
+  const handleBorrowerNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const nextValue = event.target.value.replace(/[^A-Za-zÀ-ÖØ-öø-ÿ'\-\s]/g, "");
+    form.setValue("borrowerName", nextValue, { shouldValidate: true, shouldDirty: true });
+  };
+
   const addReservation = useMutation({
     mutationFn: createReservation,
     onSuccess: () => {
@@ -55,13 +65,25 @@ function ReservationsPage() {
         <div className="grid gap-4 md:grid-cols-2">
           <div className="space-y-2">
             <Label htmlFor="bookId">Book ID</Label>
-            <Input id="bookId" placeholder="e.g. 1" {...form.register("bookId")} />
+            <Input
+              id="bookId"
+              inputMode="numeric"
+              pattern="[0-9]*"
+              placeholder="e.g. 1"
+              value={form.watch("bookId")}
+              onChange={handleBookIdChange}
+            />
             {form.formState.errors.bookId && <p className="text-sm text-red-600">{form.formState.errors.bookId.message}</p>}
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="borrowerName">Borrower name</Label>
-            <Input id="borrowerName" placeholder="Your full name" {...form.register("borrowerName")} />
+            <Input
+              id="borrowerName"
+              placeholder="Your full name"
+              value={form.watch("borrowerName")}
+              onChange={handleBorrowerNameChange}
+            />
             {form.formState.errors.borrowerName && <p className="text-sm text-red-600">{form.formState.errors.borrowerName.message}</p>}
           </div>
 

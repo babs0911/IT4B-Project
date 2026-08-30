@@ -4,17 +4,20 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "api": "json-server db.json --port 3001",
+    "dev": "vite --host 0.0.0.0 --port 4173 --strictPort",
+    "api": "json-server db.json --port 3005 --watch",
     "build": "tsc -b && vite build"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.9.1",
     "@tailwindcss/vite": "^4.3.3",
     "@tanstack/react-query": "^5.101.4",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
+    "react-hook-form": "^7.86.0",
     "react-router-dom": "^6.14.1",
     "tailwindcss": "^4.3.3",
+    "zod": "^4.5.4",
     "zustand": "^4.4.0"
   },
   "devDependencies": {
