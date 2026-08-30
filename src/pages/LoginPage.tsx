@@ -1,31 +1,36 @@
-// src/pages/LoginPage.tsx -- NEW FILE
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useAuthStore from "../Store/authStore";
-function LoginPage() {
-const [name, setName] = useState<string>("");
-// Pull just the login action out of the store
-const login = useAuthStore((state) => state.login);
-const navigate = useNavigate();
-const handleLogin = (): void => {
-	login(name); // 1. put the token in the store
-	navigate("/reservations"); // 2. then send them where they were going
-};
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import useAuthStore from "@/Store/authStore";
 
-return (
-<div className="max-w-sm">
-<h2 className="mb-4 text-2xl font-bold text-gray-900
-dark:text-white">Login</h2>
-<input value={name} onChange={(e) => setName(e.target.value)}
-placeholder="Your name"
-className="w-full rounded border border-gray-300 p-2" />
-<button onClick={handleLogin} disabled={name === ""}
-className="mt-3 rounded bg-blue-600 px-3 py-1.5 text-sm
-font-semibold text-white transition hover:bg-blue-700
-disabled:bg-gray-400">
-Log In
-</button>
-</div>
-);
+function LoginPage() {
+  const [name, setName] = useState<string>("");
+  const login = useAuthStore((state) => state.login);
+  const navigate = useNavigate();
+
+  const handleLogin = (): void => {
+    login(name);
+    navigate("/reservations");
+  };
+
+  return (
+    <div className="max-w-sm">
+      <h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">Login</h2>
+
+      <div className="space-y-3">
+        <div className="space-y-2">
+          <Label htmlFor="name">Your name</Label>
+          <Input id="name" value={name} onChange={(event) => setName(event.target.value)} placeholder="Your name" />
+        </div>
+
+        <Button onClick={handleLogin} disabled={name.trim() === ""} className="w-full">
+          Log In
+        </Button>
+      </div>
+    </div>
+  );
 }
+
 export default LoginPage;
