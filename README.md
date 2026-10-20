@@ -1,89 +1,22 @@
 # Library Book Reservation System
 
-A Vite + React + TypeScript app for a simple library-book reservation demo. The project uses typed interfaces and reusable components to display mock users, books, and reservations.
+A React, TypeScript, and Vite frontend for the Library Book Reservation API. The app loads the book catalog from the backend, supports account registration and login, and lets authenticated users create and view their reservations.
 
-## Overview
+## Run locally
 
-This project was built as a React + TypeScript assignment to demonstrate:
+1. Install dependencies with `npm install`.
+2. Copy `.env.example` to `.env` and set `VITE_API_URL` to the backend API base URL. For local development, use `http://localhost:4000/api`.
+3. Start the frontend with `npm run dev`.
+4. Build and type-check with `npm run build`.
 
-- A Vite React TypeScript setup
-- Shared TypeScript interfaces in the src/types folder
-- Reusable components in the src/components folder
-- Typed props and event handlers
-- Mock data rendered inside App.tsx
+Run the backend separately from its `itelect4-backend` directory. Configure its environment, then use `npm run dev`; use `npm run seed:books` to insert or update the sample catalog.
 
-## Features
+## Deploy to Vercel
 
-- Displays mock library users
-- Displays mock books with availability details
-- Displays mock reservations with status information
-- Includes three reusable components:
-  - UserCard
-  - BookCard
-  - ReservationCard
-- Uses explicit props interfaces for each component
-- Includes typed event handlers such as onClick and onSelect
+Deploy this repository as a Vite project and set `VITE_API_URL` to the deployed backend URL ending in `/api` (for example, `https://your-api.vercel.app/api`). After the frontend has a deployment URL, add that exact origin (scheme and hostname, without a path) to the backend's `CORS_ORIGIN` and redeploy the backend.
 
-## Project Structure
+## API behavior
 
-```text
-IT4B-Project/
-├── src/
-│   ├── App.tsx
-│   ├── App.css
-│   ├── main.tsx
-│   ├── types/
-│   │   └── index.ts
-│   └── components/
-│       ├── UserCard.tsx
-│       ├── BookCard.tsx
-│       └── ReservationCard.tsx
-├── package.json
-├── tsconfig.json
-└── README.md
-```
-
-## TypeScript Highlights
-
-- Interfaces for User, Book, Reservation, and ApiResponse
-- Enum for reservation status values
-- Type aliases such as ID, StringOrNumber, and Formatter
-- Utility types such as Partial, Pick, Omit, and ReturnType
-- Generic functions for reusable lookups
-- Union types and null-safe state handling in React
-
-## Run Locally
-
-### 1. Install dependencies
-
-```bash
-npm install
-```
-
-### 2. Start the development server
-
-```bash
-npm run dev
-```
-
-### 3. Verify the build
-
-```bash
-npm run build
-```
-
-The project should build successfully with no TypeScript errors.
-
-## Main Files
-
-### src/App.tsx
-
-Renders the mock data and displays all three components.
-
-### src/components/
-
-Contains the reusable React components for the app.
-
-### src/types/index.ts
-
-Contains the shared TypeScript type definitions and enums used throughout the app.
+- Public catalog reads use `GET /books` and `GET /books/:id`.
+- Login and registration use `POST /auth/login` and `POST /auth/register`.
+- Reservation reads and writes send the stored JWT as a Bearer token.

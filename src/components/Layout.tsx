@@ -18,7 +18,12 @@ function Layout() {
 					<NavLink to="/" end className={linkClass}>Dashboard</NavLink>
 					<NavLink to="/books" className={linkClass}>Books</NavLink>
 					<NavLink to="/reservations" className={linkClass}>Reservations</NavLink>
-					{userName === null ? <NavLink to="/login" className={linkClass}>Login</NavLink> : <button onClick={logout} className="text-gray-700 dark:text-white">Logout ({userName})</button>}
+					{userName === null ? (
+						<>
+							<NavLink to="/login" className={linkClass}>Login</NavLink>
+							<NavLink to="/register" className={linkClass}>Register</NavLink>
+						</>
+					) : <button onClick={logout} className="text-gray-700 dark:text-white">Logout ({userName})</button>}
 					<button onClick={toggleDarkMode} className="ml-auto rounded bg-gray-800 px-3 py-1.5 text-sm text-white dark:bg-gray-200 dark:text-gray-900">
 						{isDarkMode ? "Switch to Light" : "Switch to Dark"}
 					</button>

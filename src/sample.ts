@@ -3,7 +3,7 @@ import type { Book, User } from './types'
 type UserWithScore = User & { score: number }
 
 const user: UserWithScore = {
-  id: 1,
+  id: 'juan',
   name: 'Juan dela Cruz',
   email: 'juan@example.com',
   role: 'student',
@@ -12,7 +12,7 @@ const user: UserWithScore = {
 }
 
 const book: Book = {
-  id: 1,
+  id: 'clean-code',
   title: 'Clean Code',
   author: 'Robert C. Martin',
   genre: 'Programming',

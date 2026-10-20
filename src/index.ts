@@ -2,13 +2,13 @@ import type { Book, Reservation, User } from './types'
 import { ReservationStatus } from './types'
 
 const users: User[] = [
-  { id: 1, name: 'Ana Santos', email: 'ana@example.com', role: 'student', isActive: true },
-  { id: 2, name: 'Ben Cruz', email: 'ben@example.com', role: 'librarian', isActive: true },
+  { id: 'ana', name: 'Ana Santos', email: 'ana@example.com', role: 'student', isActive: true },
+  { id: 'ben', name: 'Ben Cruz', email: 'ben@example.com', role: 'librarian', isActive: true },
 ]
 
 const books: Book[] = [
   {
-    id: 1,
+    id: 'clean-code',
     title: 'Clean Code',
     author: 'Robert C. Martin',
     genre: 'Programming',
@@ -21,9 +21,9 @@ const books: Book[] = [
 
 const reservations: Reservation[] = [
   {
-    id: 101,
-    bookId: 1,
-    userId: 1,
+    id: 'reservation-101',
+    bookId: 'clean-code',
+    userId: 'ana',
     status: ReservationStatus.Pending,
     requestedAt: new Date('2026-07-18T08:30:00'),
   },

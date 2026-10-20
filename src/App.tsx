@@ -5,6 +5,7 @@ import DashboardPage from "./pages/DashboardPage";
 import BookPage from "./pages/BookPage";
 import BookDetailPage from "./pages/BookDetailPage";
 import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
 import ReservationsPage from "./pages/ReservationsPage";
 import NotFoundPage from "./pages/NotFoundPage";
 function App() {
@@ -15,6 +16,7 @@ return (
 				<Route path="books" element={<BookPage />} />
 				<Route path="books/:id" element={<BookDetailPage />} />
 				<Route path="login" element={<LoginPage />} />
+				<Route path="register" element={<RegisterPage />} />
 
 				<Route element={<ProtectedRoute />}> {/* <-- the guard */}
 					<Route path="reservations" element={<ReservationsPage />} />

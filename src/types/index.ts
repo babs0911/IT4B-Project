@@ -1,7 +1,7 @@
 // ===== INTERFACES =====
 // Interface: defines the shape of a User entity used across the app.
 export interface User {
-  id: number;
+  id: string;
   name: string;
   email: string;
   role: "student" | "librarian" | "admin";
@@ -10,7 +10,7 @@ export interface User {
 
 // Interface: defines the shape of a Book entity.
 export interface Book {
-  id: number;
+  id: string;
   title: string;
   author: string;
   isbn?: string;
@@ -23,9 +23,9 @@ export interface Book {
 
 // Interface: defines the shape of a Reservation entity.
 export interface Reservation {
-  id: number;
-  bookId: number;
-  userId: number;
+  id: string;
+  bookId: string;
+  userId: string;
   status: ReservationStatus;
   requestedAt: Date;
   reservedUntil?: Date;
@@ -48,7 +48,7 @@ export type BookPreview = Pick<Book, "id" | "title" | "availableCopies">;
 // Utility type: Omit removes the specified properties from Book.
 export type PublicBook = Omit<Book, "summary" | "tags">;
 // Utility type: Record creates a map of numeric IDs to numbers.
-export type AvailabilityMap = Record<number, number>;
+export type AvailabilityMap = Record<string, number>;
 export type RoleCount = Record<"student" | "librarian" | "admin", number>;
 
 // ===== ENUMS =====
@@ -90,14 +90,14 @@ export function getFirst<T>(items: T[]): T | undefined {
 }
 
 // Generic constraint: T must have an id property.
-export function getById<T extends { id: number }>(items: T[], id: number): T | undefined {
+export function getById<T extends { id: string }>(items: T[], id: string): T | undefined {
   return items.find((item) => item.id === id);
 }
 
 // Function returning a typed demo reservation using the enum.
-export function createDemoReservation(bookId: number, userId: number) {
+export function createDemoReservation(bookId: string, userId: string) {
   return {
-    id: 1,
+    id: "demo-reservation",
     bookId,
     userId,
     status: ReservationStatus.Pending,
@@ -109,12 +109,13 @@ export function createDemoReservation(bookId: number, userId: number) {
 export type NewReservation = ReturnType<typeof createDemoReservation>;
 
 export type ApiBook = Omit<Book, "id"> & { id: string };
-export type ApiReservation = Omit<Reservation, "id" | "bookId" | "requestedAt" | "reservedUntil" | "borrowedAt" | "returnedAt"> & {
+export type ApiReservation = Omit<Reservation, "id" | "bookId" | "userId" | "requestedAt" | "reservedUntil" | "borrowedAt" | "returnedAt"> & {
   id: string;
   bookId: string;
+  userId: string;
   requestedAt: string;
   reservedUntil?: string;
   borrowedAt?: string;
   returnedAt?: string;
 };
-export type NewReservationRequest = Omit<ApiReservation, "id">;
+export type NewReservationRequest = Pick<ApiReservation, "bookId">;
