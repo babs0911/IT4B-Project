@@ -26,7 +26,7 @@ function BookDetailPage() {
 		<div>
 			<h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">{book.title}</h2>
 			<div className="max-w-sm">
-				<BookCard book={{ ...book, id: Number(book.id) }} onSelect={() => {}} />
+				<BookCard book={book} onSelect={() => {}} />
 			</div>
 			<button onClick={() => navigate("/books")}
 				className="mt-4 rounded bg-blue-600 px-3 py-1.5 text-sm font-semibold text-white transition hover:bg-blue-700">

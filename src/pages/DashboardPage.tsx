@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchBooks, fetchReservations } from "@/api/client";
+import useAuthStore from "@/Store/authStore";
 import type { ApiBook, ApiReservation } from "@/types";
 
 function StatCard({ label, value, accent }: { label: string; value: string; accent: string }) {
@@ -12,6 +13,7 @@ function StatCard({ label, value, accent }: { label: string; value: string; acce
 }
 
 function DashboardPage() {
+  const token = useAuthStore((state) => state.token);
   const { data: books = [], isPending: isBooksPending, isError: isBooksError } = useQuery<ApiBook[]>({
     queryKey: ["books"],
     queryFn: fetchBooks,
@@ -20,17 +22,18 @@ function DashboardPage() {
   const { data: reservations = [], isPending: isReservationsPending, isError: isReservationsError } = useQuery<ApiReservation[]>({
     queryKey: ["reservations"],
     queryFn: fetchReservations,
+    enabled: token !== null,
   });
 
   const totalAvailableCopies = books.reduce((sum, book) => sum + Number(book.availableCopies ?? 0), 0);
   const pendingReservations = reservations.filter((reservation) => Number(reservation.status) === 0).length;
   const activeReservations = reservations.filter((reservation) => Number(reservation.status) === 1).length;
 
-  if (isBooksPending || isReservationsPending) {
+  if (isBooksPending || (token !== null && isReservationsPending)) {
     return <div className="animate-pulse p-6">Loading library dashboard...</div>;
   }
 
-  if (isBooksError || isReservationsError) {
+  if (isBooksError || (token !== null && isReservationsError)) {
     return <div className="rounded-lg bg-red-50 p-4 text-red-700">Could not load library data.</div>;
   }
 

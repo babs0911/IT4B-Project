@@ -26,7 +26,7 @@ function BookPage() {
 			<div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
 				{filteredBooks.map((b) => (
 					<Link key={b.id} to={`/books/${b.id}`}>
-						<BookCard book={{ ...b, id: Number(b.id) }} onSelect={() => {}} />
+						<BookCard book={b} onSelect={() => {}} />
 					</Link>
 				))}
 			</div>

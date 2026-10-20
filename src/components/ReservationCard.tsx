@@ -34,7 +34,7 @@ function ReservationCard({ reservation, onSelect, variant = 'default' }: Reserva
             Book ID: <span className="font-semibold text-slate-950 dark:text-white">{reservation.bookId}</span>
           </p>
           <p>
-            User ID: <span className="font-semibold text-slate-950 dark:text-white">{reservation.userId}</span>
+            Your reservation
           </p>
           <p>
             Requested: <span className="font-semibold text-slate-950 dark:text-white">{reservation.requestedAt.toLocaleString()}</span>
