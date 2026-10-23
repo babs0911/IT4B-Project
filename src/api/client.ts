@@ -1,5 +1,5 @@
 import useAuthStore from "../Store/authStore";
-import type { ApiBook, ApiReservation, NewReservationRequest, User } from "../types/index";
+import type { AiReply, ApiBook, ApiReservation, NewReservationRequest, User } from "../types/index";
 
 export const API_URL = (import.meta.env.VITE_API_URL || "http://localhost:4000/api").replace(/\/+$/, "");
 
@@ -67,4 +67,11 @@ export function registerUser(name: string, email: string, password: string): Pro
 		method: "POST",
 		body: JSON.stringify({ name, email, password }),
 	});
+}
+
+export function askAi(prompt: string): Promise<AiReply> {
+	return request<AiReply>("/ai", {
+		method: "POST",
+		body: JSON.stringify({ prompt }),
+	}, true);
 }
