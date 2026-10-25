@@ -1,7 +1,11 @@
 import useAuthStore from "../Store/authStore";
 import type { AiReply, ApiBook, ApiReservation, NewReservationRequest, User } from "../types/index";
 
-export const API_URL = (import.meta.env.VITE_API_URL || "http://localhost:4000/api").replace(/\/+$/, "");
+const defaultApiUrl = import.meta.env.PROD
+	? "https://itelect4-backend-umber.vercel.app/api"
+	: "http://localhost:4000/api";
+
+export const API_URL = (import.meta.env.VITE_API_URL || defaultApiUrl).replace(/\/+$/, "");
 
 interface AuthResponse {
 	token: string;
