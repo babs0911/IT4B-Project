@@ -13,7 +13,7 @@ Run the backend separately from its `itelect4-backend` directory. Configure its 
 
 ## Deploy to Vercel
 
-Deploy this repository as a Vite project from the `gt4-part2` production branch and set `VITE_API_URL` to the deployed backend URL ending in `/api` (for example, `https://your-api.vercel.app/api`). After the frontend has a deployment URL, add that exact origin (scheme and hostname, without a path) to the backend's `CORS_ORIGIN` and redeploy the backend.
+Deploy this repository as a Vite project from the `gt5-ai` production branch. Set `VITE_API_URL` to the deployed backend URL ending in `/api` (for example, `https://itelect4-backend-umber.vercel.app/api`). The frontend defaults to the deployed API in production and localhost in development. Add the exact frontend origin (scheme and hostname, without a path) to the backend's `CORS_ORIGIN` and redeploy the backend.
 
 ## API behavior
 

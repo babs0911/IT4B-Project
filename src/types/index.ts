@@ -119,3 +119,15 @@ export type ApiReservation = Omit<Reservation, "id" | "bookId" | "userId" | "req
   returnedAt?: string;
 };
 export type NewReservationRequest = Pick<ApiReservation, "bookId">;
+
+
+export interface AiReply {
+  category:
+    | "book-recommendation"
+    | "reservation-help"
+    | "account-help"
+    | "general-library-help";
+  answer: string;
+  suggestions: string[];
+  nextSteps: string[];
+}
