@@ -23,6 +23,7 @@ function App() {
         <Route element={<ProtectedRoute />}>
           <Route path="reservations" element={<ReservationsPage />} />
           <Route path="library-assistant" element={<LibraryAssistantPage />} />
+          <Route path="review" element={<LibraryAssistantPage />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Route>
