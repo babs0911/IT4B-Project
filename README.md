@@ -1,3 +1,5 @@
+[![CI](https://github.com/babs0911/IT4B-Project/actions/workflows/ci.yml/badge.svg?branch=gt6-tests)](https://github.com/babs0911/IT4B-Project/actions/workflows/ci.yml)
+
 # Library Book Reservation System
 
 A React, TypeScript, and Vite frontend for the Library Book Reservation API. The app loads the book catalog from the backend, supports account registration and login, and lets authenticated users create and view their reservations.
